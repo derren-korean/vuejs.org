@@ -1,10 +1,10 @@
 ---
-title: Custom Directives
+title: 사용자 정의 디렉티브(directive:명령어)
 type: guide
 order: 16
 ---
 
-## Intro
+## 소개
 
 In addition to the default set of directives shipped in core (`v-model` and `v-show`), Vue also allows you to register your own custom directives. Note that in Vue 2.0, the primary form of code reuse and abstraction is components - however there may be cases where you just need some low-level DOM access on plain elements, and this is where custom directives would still be useful. An example would be focusing on an input element, like this one:
 
@@ -53,7 +53,7 @@ Then in a template, you can use the new `v-focus` attribute on any element, like
 <input v-focus>
 ```
 
-## Hook Functions
+## 후킹 함수들
 
 A directive definition object can provide several hook functions (all optional):
 
@@ -69,7 +69,7 @@ A directive definition object can provide several hook functions (all optional):
 
 We'll explore the arguments passed into these hooks (i.e. `el`, `binding`, `vnode`, and `oldVnode`) in the next section.
 
-## Directive Hook Arguments
+## 후킹 함수에 넘겨주는 인자들
 
 Directive hooks are passed these arguments:
 
@@ -138,7 +138,7 @@ new Vue({
 </script>
 {% endraw %}
 
-## Function Shorthand
+## 함수 간략표현 하기
 
 In many cases, you may want the same behavior on `bind` and `update`, but don't care about the other hooks. For example:
 
@@ -148,7 +148,7 @@ Vue.directive('color-swatch', function (el, binding) {
 })
 ```
 
-## Object Literals
+## 객체 리터럴들
 
 If your directive needs multiple values, you can also pass in a JavaScript object literal. Remember, directives can take any valid JavaScript expression.
 
