@@ -1,30 +1,30 @@
 ---
-title: 'Transition Effects'
+title: '트렌지션 효과'
 type: guide
 order: 13
 ---
 
-## Overview
+## 개요 
 
-Vue provides a variety of ways to apply transition effects when items are inserted, updated, or removed from the DOM. This includes tools to:
+Vue 는 DOM 에 item(DOM 노드들로 구성된 템플릿) 을 삽입하거나 업데이트하거나 삭제할때 다양한 방식의 트렌지션 효과를 제공한다. 
 
-- automatically apply classes for CSS transitions and animations
-- integrate 3rd-party CSS animation libraries, such as Animate.css
-- use JavaScript to directly manipulate the DOM during transition hooks
-- integrate 3rd-party JavaScript animation libraries, such as Velocity.js
+- 자동으로 CSS 트렌지션과 애니메이션을 주는 클래스를 적용한다.
+- Animate.css 처럼 3rd 파티에서 제공하는 CSS animation 라이브러리를 적용할 수 있다.
+- 트렌지션 후킹을 통해 자바스크립트로 DOM을 직접 조작할 수 있다. (?)
+- Velocity.js 같은 3rd-party의 자바스크립트 애니메이션 라이브러리를 적용할 수 있다. 
 
-On this page, we'll only cover entering, leaving, and list transitions, but you can see the next section for [managing state transitions](transitioning-state.html).
+이 페이지에서는 화면에 나타나거나 사라질때, 리스트 보기의 전환효과등에 대해서만 다룰 것이다. 다음 장에서는 [트렌지션 상태 관리](transitioning-state.html)에 대한 자세한 내용을 알아볼 것이다.
 
-## Transitioning Single Elements/Components
+## 단일 엘리먼트 / 컴포넌트 트렌지션 
 
-Vue provides a `transition` wrapper component, allowing you to add entering/leaving transitions for any element or component in the following contexts:
+Vue 는 아래와 같은 상황에서 엘리먼트나 컴포넌트가 나오고 들어갈때 줄 수 있는 효과를 주기 위해 이들 엘리먼트를 감싸는 `transition` 래퍼 컴포넌트를 제공한다. 
 
-- Conditional rendering (using `v-if`)
-- Conditional display (using `v-show`)
-- Dynamic components
-- Component root nodes
+- `v-if` 구문 : 화면에 조건에 따라 화면에 붙이거나 떼어낸다.
+- `v-show` 구문 : 조건에 따라 보여주고 안보여준다. 
+- 동적으로 붙는 컴포넌트 
+- 컴포넌트의 최상위 노드들... (? 최상위 노드가 아니면 안되나 보다)
 
-This is what a very simple example looks like in action:
+아래는 `v-if`에 트렌지션 효과를 준 간단한 예제이다 :
 
 ``` html
 <div id="demo">
@@ -82,17 +82,17 @@ new Vue({
 </style>
 {% endraw %}
 
-When an element wrapped in a `transition` component is inserted or removed, this is what happens:
+`transition` 컴포넌트에 감싸인 엘리먼트가 DOM에 삽입되거나 삭제 될때 다음과 같은 일이 일어난다 : 
 
-1. Vue will automatically sniff whether the target element has CSS transitions or animations applied. If it does, CSS transition classes will be added/removed at appropriate timings.
+1. Vue가 알아서 대상이 되는 엘리먼트에 CSS 트렌지션이나 애니메이션이 적용되어 있는지를 조사합니다. 그런게 있으면 CSS 트렌지션 클래스가 적당한 시점에 붙거나 떨어진다. 
 
-2. If the transition component provided [JavaScript hooks](#JavaScript-Hooks), these hooks will be called at appropriate timings.
+2. 트렌지션 컴포넌트가 [JavaScript hooks](#JavaScript-Hooks)을 제공하면 적절한 타이밍에 이 후킹 메쏘드들이 호출된다.
 
-3. If no CSS transitions/animations are detected and no JavaScript hooks are provided, the DOM operations for insertion and/or removal will be executed immediately on next frame (Note: this is a browser animation frame, different from Vue's concept of `nextTick`).
+3. CSS 트렌지션이나 에니메이션이 없고 자바스크립트 후킹 메쏘드도 없다면 DOM은 다음 프레임에서 바로 해당 엘리먼트에 대한 삽입/삭제를 단행한다. (이때의 프레임이란 Vue의 `nextTick` 에서 얘기하는 프레임의 개념과 다르다. 이 프레임은 브라우저의 애니메이션 프레임을 말한다.)
 
-### Transition Classes
+### 트렌지션 클래스 
 
-There are four classes applied for enter/leave transitions.
+삽입 삭제시 적용 가능한 클래스틑 아래 4가지 이다.
 
 1. `v-enter`: Starting state for enter. Applied before element is inserted, removed after one frame.
 2. `v-enter-active`: Active and ending state for enter. Applied before element is inserted, removed when transition/animation finishes.
@@ -105,7 +105,7 @@ Each of these classes will be prefixed with the name of the transition. Here the
 
 `v-enter-active` and `v-leave-active` give you the ability to specify different easing curves for enter/leave transitions, which you'll see an example of in the following section.
 
-### CSS Transitions
+### CSS 를 이용한 트렌지션 
 
 One of the most common transition types uses CSS transitions. Here's a simple example:
 
@@ -175,7 +175,7 @@ new Vue({
 </style>
 {% endraw %}
 
-### CSS Animations
+### CSS 애니메이션 
 
 CSS animations are applied in the same way as CSS transitions, the difference being that `v-enter` is not removed immediately after the element is inserted, but on an `animationend` event.
 
@@ -314,7 +314,7 @@ new Vue({
 </script>
 {% endraw %}
 
-### Custom Transition Classes
+### 사용자 정의 트렌지션 클래스 만들기
 
 You can also specify custom transition classes by providing the following attributes:
 
@@ -377,7 +377,7 @@ new Vue({
 </script>
 {% endraw %}
 
-### Using Transitions and Animations Together
+### 트렌지션과 애니메이션을 같이 사용하기 
 
 Vue needs to attach event listeners in order to know when a transition has ended. It can either be `transitionend` or `animationend`, depending on the type of CSS rules applied. If you are only using one or the other, Vue can automatically detect the correct type.
 
@@ -555,7 +555,7 @@ new Vue({
 </script>
 {% endraw %}
 
-## Transitions on Initial Render
+## 초기 렌더링에 트렌지션 효과 사용하기 
 
 If you also want to apply a transition on the initial render of a node, you can add the `appear` attribute:
 
@@ -590,7 +590,7 @@ and custom JavaScript hooks:
 </transition>
 ```
 
-## Transitioning Between Elements
+## 엘리먼트 전환시 트렌지션 주기 
 
 We discuss [transitioning between components](#Transitioning-Between-Components) later, but you can also transition between raw elements using `v-if`/`v-else`. One of the most common two-element transitions is between a list container and a message describing an empty list:
 
@@ -669,7 +669,7 @@ computed: {
 }
 ```
 
-### Transition Modes
+### 트렌지션 모드 
 
 There's still one problem though. Try clicking the button below:
 
@@ -883,7 +883,7 @@ new Vue({
 
 Pretty cool, right?
 
-## Transitioning Between Components
+## 컴포넌트들 사이에 트렌지션 효과 주기 
 
 Transitioning between components is even simpler - we don't even need the `key` attribute. Instead, we just wrap a [dynamic component](components.html#Dynamic-Components):
 
@@ -953,7 +953,7 @@ new Vue({
 </script>
 {% endraw %}
 
-## List Transitions
+## 트렌지션 리스트 
 
 So far, we've managed transitions for:
 
@@ -1063,7 +1063,7 @@ new Vue({
 
 There's one problem with this example. When you add or remove an item, the ones around it instantly snap into their new place instead of smoothly transitioning. We'll fix that later.
 
-### List Move Transitions
+### 이동시 사용하는 트렌지션 리스트 
 
 The `<transition-group>` component has another trick up its sleeve. It can not only animate entering and leaving, but also changes in position. The only new concept you need to know to use this feature is the addition of **the `v-move` class**, which is added when items are changing positions. Like the other classes, its prefix will match the value of a provided `name` attribute and you can also manually specify a class with the `move-class` attribute.
 

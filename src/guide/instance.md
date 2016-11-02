@@ -1,10 +1,10 @@
 ---
-title: The Vue Instance
+title: Vue 인스턴스
 type: guide
 order: 3
 ---
 
-## Constructor
+## 생성자 
 
 Every Vue vm is bootstrapped by creating a **root Vue instance** with the `Vue` constructor function:
 
@@ -32,9 +32,9 @@ var myComponentInstance = new MyComponent()
 
 Although it is possible to create extended instances imperatively, most of the time it is recommended to compose them declaratively in templates as custom elements. We will talk about [the component system](components.html) in detail later. For now, you just need to know that all Vue components are essentially extended Vue instances.
 
-## Properties and Methods
+## 속성과 메쏘드
 
-Each Vue instance **proxies** all the properties found in its `data` object:
+각각의 Vue 인스턴스는 `data` 객체에서 발견되는 모든 속성을 **프락시** 한다 :
 
 ``` js
 var data = { a: 1 }
@@ -77,7 +77,7 @@ vm.$watch('a', function (newVal, oldVal) {
 
 Consult the [API reference](/api) for the full list of instance properties and methods.
 
-## Instance Lifecycle Hooks
+## 인스턴스의 Lifecycle 후킹 함수들
 
 Each Vue instance goes through a series of initialization steps when it is created - for example, it needs to set up data observation, compile the template, mount the instance to the DOM, and update the DOM when data changes. Along the way, it will also invoke some **lifecycle hooks**, which give us the opportunity to execute custom logic. For example, the `created` hook is called after the instance is created:
 
@@ -96,7 +96,7 @@ var vm = new Vue({
 
 There are also other hooks which will be called at different stages of the instance's lifecycle, for example `mounted`, `updated`, and `destroyed`. All lifecycle hooks are called with their `this` context pointing to the Vue instance invoking it. You may have been wondering where the concept of "controllers" lives in the Vue world and the answer is: there are no controllers. Your custom logic for a component would be split among these lifecycle hooks.
 
-## Lifecycle Diagram
+## 라이프사이클 다이어그램
 
 Below is a diagram for the instance lifecycle. You don't need to fully understand everything going on right now, but this diagram will be helpful in the future.
 

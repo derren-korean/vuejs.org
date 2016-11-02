@@ -1,5 +1,5 @@
 ---
-title: Form Input Bindings
+title: 폼 입력 바인딩
 type: guide
 order: 10
 ---
