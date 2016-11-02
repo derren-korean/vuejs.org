@@ -1,14 +1,14 @@
 ---
-title: Event Handling
+title: 이벤트 핸들링
 type: guide
 order: 9
 ---
 
-## Listening to Events
+## Event 에 반응하기 (listen)
 
-We can use the `v-on` directive to listen to DOM events and run some JavaScript when they're triggered.
+ `v-on` 디렉티브를 이용해 DOM 이벤트를 감지하고 자동 호출이 되면 자바스크립트 메쏘드를 호출할 수 있다.
 
-For example:
+에를 들어 :
 
 ``` html
 <div id="example-1">
@@ -25,7 +25,7 @@ var example1 = new Vue({
 })
 ```
 
-Result:
+그 결과 :
 
 {% raw %}
 <div id="example-1" class="demo">
@@ -42,11 +42,11 @@ var example1 = new Vue({
 </script>
 {% endraw %}
 
-## Method Event Handlers
+## 이벤트 핸들링 메쏘드
 
 The logic for many event handlers will be more complex though, so keeping your JavaScript in the value of the `v-on` attribute simply isn't feasible. That's why `v-on` can also accept the name of a method you'd like to call.
 
-For example:
+예를 들어 :
 
 ``` html
 <div id="example-2">
@@ -76,7 +76,7 @@ var example2 = new Vue({
 example2.greet() // -> 'Hello Vue.js!'
 ```
 
-Result:
+그 결과 :
 
 {% raw %}
 <div id="example-2" class="demo">
@@ -98,7 +98,7 @@ var example2 = new Vue({
 </script>
 {% endraw %}
 
-## Methods in Inline Handlers
+## 인라인 핸들링 메쏘드
 
 Instead of binding directly to a method name, we can also use methods in an inline JavaScript statement:
 
@@ -154,7 +154,7 @@ methods: {
 }
 ```
 
-## Event Modifiers
+## 이벤트 변경자 (modifier)
 
 It is a very common need to call `event.preventDefault()` or `event.stopPropagation()` inside event handlers. Although we can do this easily inside methods, it would be better if the methods can be purely about data logic rather than having to deal with DOM event details.
 
@@ -186,7 +186,7 @@ To address this problem, Vue provides **event modifiers** for `v-on`. Recall tha
 <div v-on:click.self="doThat">...</div>
 ```
 
-## Key Modifiers
+## 키 이벤트 변경자(modifier)
 
 When listening for keyboard events, we often need to check for common key codes. Vue also allows adding key modifiers for `v-on` when listening for key events:
 

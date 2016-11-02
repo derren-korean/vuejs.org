@@ -1,10 +1,10 @@
 ---
-title: Deploying For Production
+title: Production 으로 디플로이 하기
 type: guide
 order: 20
 ---
 
-## Stripping Out Warnings
+##  Warning 메시지 없애기
 
 The minified standalone build of Vue has already stripped out all the warnings for you for a smaller file size, but when you are using tools like Webpack or Browserify, you will need some additional configuration to achieve this.
 
@@ -49,11 +49,11 @@ NODE_ENV=production browserify -g envify -e main.js | uglifyjs -c -m > build.js
 NODE_ENV=production browserify -g envify -p [ vueify/plugins/extract-css -o build.css ] -e main.js | uglifyjs -c -m > build.js
 ```
 
-## Tracking Runtime Errors
+## Runtime 에러 조회하기
 
 If a runtime error occurs during a component's render, it will be passed to the global `Vue.config.errorHandler` config function if it has been set. It might be a good idea to leverage this hook together with an error-tracking service like [Sentry](https://sentry.io), which provides [an official integration](https://sentry.io/for/vue/) for Vue.
 
-## Extracting CSS
+## CSS를 따로 분리하기
 
 When using [Single-File Components](./single-file-components.html), the `<style>` tags are injected dynamically at runtime during development. In production you may want to extract the styles across all components into a single CSS file. For details on how to achieve this, consult the respective documentation for [vue-loader](http://vue-loader.vuejs.org/en/configurations/extract-css.html) and [vueify](https://github.com/vuejs/vueify#css-extraction).
 
