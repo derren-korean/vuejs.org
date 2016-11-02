@@ -94,10 +94,10 @@ new Vue({
 
 삽입 삭제시 적용 가능한 클래스틑 아래 4가지 이다.
 
-1. `v-enter`: Starting state for enter. Applied before element is inserted, removed after one frame.
-2. `v-enter-active`: Active and ending state for enter. Applied before element is inserted, removed when transition/animation finishes.
-3. `v-leave`: Starting state for leave. Applied when leave transition is triggered, removed after one frame.
-4. `v-leave-active`: Active and ending state for leave. Applied when leave transition is triggered, removed when the transition/animation finishes.
+1. `v-enter`: 엘리먼트 삽입이 시작될때. 엘리먼트 DOM에 삽입되기 직전에 적용되었다가 딱 한 프레임만 적용하고 바로 제거된다.
+2. `v-enter-active`: 엘리먼트 삽입이 진행되고 완전히 들어갈때까지. 엘리먼트가 DOM에 삽입되기 전에 적용되었다가 트렌지션과 애니메이션이 모두 끝나고 제거된다.
+3. `v-leave`: 엘리먼트 삭제가 시작되는 상태를 나타내는 클래스. 삭제 이벤트가 도착해서 시작할때 클래스가 적용이 되고 딱 한 프레임만 적용하고 바로 제거된다.
+4. `v-leave-active`: 삭제가 진행될때 부터 적용이 되고, 삭제 트렌지션과 애니메이션이 완전히 끝난 다음에 클래스에서 제거된다.
 
 ![Transition Diagram](/images/transition.png)
 
@@ -107,7 +107,7 @@ Each of these classes will be prefixed with the name of the transition. Here the
 
 ### CSS 를 이용한 트렌지션 
 
-One of the most common transition types uses CSS transitions. Here's a simple example:
+트렌지션으로 가장 많이 쓰는 방법이 CSS 를 이용한 트렐ㄴ지션이다. 아래는 그 예이다 :
 
 ``` html
 <div id="example-1">
@@ -316,16 +316,16 @@ new Vue({
 
 ### 사용자 정의 트렌지션 클래스 만들기
 
-You can also specify custom transition classes by providing the following attributes:
+`transition` 엘리먼트에 어트리뷰트값으로 클래스 값을 주어 트렌지션 효과를 낼 수도 있다 :
 
 - `enter-class`
 - `enter-active-class`
 - `leave-class`
 - `leave-active-class`
 
-These will override the conventional class names. This is especially useful when you want to combine Vue's transition system with an existing CSS animation library, such as [Animate.css](https://daneden.github.io/animate.css/).
+이렇게 주는 클래스는 지금까지 얘기한 규칙으로 적용되는 다른 클래스보다 우선한다. 어트리뷰트로 클래스를 지정하는 이런 방식은  [Animate.css](https://daneden.github.io/animate.css/) 같이 널리쓰이는 라이브러리를 적용해서 쓸 경우 특히 유용하게 사용할 수 있다.
 
-Here's an example:
+여기 그 예제가 있다 :
 
 ``` html
 <link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
@@ -383,9 +383,9 @@ Vue needs to attach event listeners in order to know when a transition has ended
 
 However, in some cases you may want to have both on the same element, for example having a CSS animation triggered by Vue, along with a CSS transition effect on hover. In these cases, you will have to explicitly declare the type you want Vue to care about in a `type` attribute, with a value of either `animation` or `transition`.
 
-### JavaScript Hooks
+### 자바스크립트 후킹하기
 
-You can also define JavaScript hooks in attributes:
+`transition` 의 어트리뷰트에 자바스크립트 후킹 메쏘드를 지정할 수 있다 :
 
 ``` html
 <transition
