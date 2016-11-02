@@ -1,5 +1,5 @@
 ---
-title: List Rendering
+title: 리스트 뿌리기 
 type: guide
 order: 8
 ---

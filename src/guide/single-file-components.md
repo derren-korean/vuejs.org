@@ -45,7 +45,7 @@ order: 19
 
 - **모던 자바스크립트 ES2015/16**: Babel 가이드를 읽어라 [Learn ES2015 guide](https://babeljs.io/docs/learn-es2015/). 모든 기능을 기억해야 할 필요는 없겠지만, 필요할때 찾아서 읽을 수 있으면 도움을 많이 받을 것이다. 
 
-이 기술들을 깊이 공부한 다음에, [webpack-simple](https://github.com/vuejs-templates/webpack-simple) 템플릿도 자세히 보기를 권한다. 해보라는 데로 하면서 Vue 프로젝트를 `.vue` 컴포넌트와 수정하면 바로 ES2015 스크립트로 변환해서 브라우저에까지 반영이 되는 핫 릴로딩 기술로 만들어보아야 한다.
+이 기술들을 깊이 공부한 다음에, [webpack-simple](https://github.com/vuejs-templates/webpack-simple) 템플릿도 자세히 보기를 권한다. 해보라는 데로 하면서 Vue 프로젝트를 `.vue` 컴포넌트와 핫 릴로딩 기술(수정하면 바로 ES2015 스크립트로 변환해서 브라우저에까지 반영이 되는)로 만들어보아야 한다.
 
 템플릿에서는 [Webpack](https://webpack.github.io/) 기술을 활용하고 있는데, 웹팩은 여러 모듈을 애플리케이션에서 사용하기 편하도록 하나의 번들로 묶어주는 역할을 한다. 웹팩만 더 배워보고 싶다면 [this video](https://www.youtube.com/watch?v=WQue1AN93YU) 에 잘 소개되어 있다. 기본적인 내용을 익혔으면 [this advanced Webpack course on Egghead.io](https://egghead.io/courses/using-webpack-for-production-javascript-applications) 을 보기 바란다. 
 

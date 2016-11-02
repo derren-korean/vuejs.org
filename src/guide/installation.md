@@ -1,5 +1,5 @@
 ---
-title: Installation
+title: 설치하기 
 type: guide
 order: 1
 vue_version: 2.0.3

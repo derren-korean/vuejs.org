@@ -1,5 +1,5 @@
 ---
-title: State Management
+title: 상태 관리 
 type: guide
 order: 22
 ---
