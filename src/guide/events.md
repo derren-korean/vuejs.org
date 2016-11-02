@@ -44,7 +44,7 @@ var example1 = new Vue({
 
 ## 이벤트 핸들링 메쏘드
 
-The logic for many event handlers will be more complex though, so keeping your JavaScript in the value of the `v-on` attribute simply isn't feasible. That's why `v-on` can also accept the name of a method you'd like to call.
+많은 경우, 이벤트 핸들러 함수의 로직이 한줄로 실행하기는 어렵기 때문에 `v-on` 어트리뷰트 값으로 실행가능한 자바스크립트 코드를 주기는 사실상 어렵다. 그렇기 때문에 `v-on` 에 호출할 함수명이 값으로 올 수 있다.
 
 예를 들어 :
 
@@ -100,7 +100,7 @@ var example2 = new Vue({
 
 ## 인라인 핸들링 메쏘드
 
-Instead of binding directly to a method name, we can also use methods in an inline JavaScript statement:
+메쏘드 이름을 직접주는 대신, 자바스크립트로 메쏘드를 호출하는 구문을 사용할 수 있다 :
 
 ``` html
 <div id="example-3">
@@ -119,7 +119,7 @@ new Vue({
 })
 ```
 
-Result:
+그 결과 :
 {% raw %}
 <div id="example-3" class="demo">
   <button v-on:click="say('hi')">Say hi</button>
@@ -137,7 +137,7 @@ new Vue({
 </script>
 {% endraw %}
 
-Sometimes we also need to access the original DOM event in an inline statement handler. You can pass it into a method using the special `$event` variable:
+또, 메쏘드 호출 구문에 인자로 DOM 이벤트 객체를 넘겨줄 수 있다. 이 이벤트 객체는 `$event` 라는 변수를 이용해 넘겨야 한다 :
 
 ``` html
 <button v-on:click="warn('Form cannot be submitted yet.', $event)">Submit</button>
@@ -156,9 +156,8 @@ methods: {
 
 ## 이벤트 변경자 (modifier)
 
-It is a very common need to call `event.preventDefault()` or `event.stopPropagation()` inside event handlers. Although we can do this easily inside methods, it would be better if the methods can be purely about data logic rather than having to deal with DOM event details.
-
-To address this problem, Vue provides **event modifiers** for `v-on`. Recall that modifiers are directive postfixes denoted by a dot.
+이벤트 핸들러에서 이벤트의 전달을 막기 위해 `event.preventDefault()` 나 `event.stopPropagation()` 호출은하는 것은 종종 사용하는 구문이다. 이런 구문을 메쏘드 안에서 코딩해 주는 것도 방법이지만, 메쏘드 안에서는 이벤트에 대한 후처리에 신경쓰지 않고 순수한 데이터 처리 로직만 담당한다면 더 좋을 것이다. 
+이때문에 Vue 는 `v-on`에 ** event modifiers (이벤트 변경자)** 라는 구조를 두고 있다. 이 변경자는 이벤트의 디렉티브 뒤에 . 뒤에 오는데 다음과 같은 것들이 있다.
 
 - `.stop`
 - `.prevent`
@@ -166,7 +165,7 @@ To address this problem, Vue provides **event modifiers** for `v-on`. Recall tha
 - `.self`
 
 ``` html
-<!-- the click event's propagation will be stopped -->
+<!-- 클릭 이벤트 전달이 멈춘다 -->
 <a v-on:click.stop="doThis"></a>
 
 <!-- the submit event will no longer reload the page -->
@@ -175,7 +174,7 @@ To address this problem, Vue provides **event modifiers** for `v-on`. Recall tha
 <!-- modifiers can be chained -->
 <a v-on:click.stop.prevent="doThat"></a>
 
-<!-- just the modifier -->
+<!-- 변경자만 쓸 수도 있다 -->
 <form v-on:submit.prevent></form>
 
 <!-- use capture mode when adding the event listener -->
@@ -188,14 +187,14 @@ To address this problem, Vue provides **event modifiers** for `v-on`. Recall tha
 
 ## 키 이벤트 변경자(modifier)
 
-When listening for keyboard events, we often need to check for common key codes. Vue also allows adding key modifiers for `v-on` when listening for key events:
+키보드 이벤트를 잡아낼 때는 일반적인 키 코드 값을 직접 써주면 된다 :
 
 ``` html
 <!-- only call vm.submit() when the keyCode is 13 -->
 <input v-on:keyup.13="submit">
 ```
 
-Remembering all the keyCodes is a hassle, so Vue provides aliases for the most commonly used keys:
+키코드 값을 모두 숫자로 기억하기는 어려운 일이다. 그래서 일반적으로 많이 쓰는 alias 를 대신 사용하는 것을 지원한다 :
 
 ``` html
 <!-- same as above -->
@@ -205,7 +204,7 @@ Remembering all the keyCodes is a hassle, so Vue provides aliases for the most c
 <input @keyup.enter="submit">
 ```
 
-Here's the full list of key modifier aliases:
+키 변경자의 모든 리스트는 아래와 같다 :
 
 - enter
 - tab
@@ -217,7 +216,7 @@ Here's the full list of key modifier aliases:
 - left
 - right
 
-You can also [define custom key modifier aliases](/api/#keyCodes) via the global `config.keyCodes` object:
+전역 객체인 `config.keyCodes` 파일에 [사용자 정의 키코드 alias를 정의할 수 있다](/api/#keyCodes) :
 
 ``` js
 // enable v-on:keyup.f1
