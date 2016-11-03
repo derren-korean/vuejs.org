@@ -1,10 +1,10 @@
 ---
-title: Server-Side Rendering
+title: 서버 사이드 렌더링
 type: guide
 order: 24
 ---
 
-## Do You Need SSR?
+## 서버사이트 렌더링이 필요한가?
 
 Before diving into SSR, let's explore what it actually does for you and when you might need it.
 

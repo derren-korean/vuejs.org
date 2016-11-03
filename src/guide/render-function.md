@@ -1,14 +1,14 @@
 ---
-title: Render Functions
+title: Render 함수 
 type: guide
 order: 15
 ---
 
-## Basics
+## 기본적인 내용  
 
-Vue recommends using templates to build your HTML in the vast majority of cases. There are situations however, where you really need the full programmatic power of JavaScript. That's where you can use the **render  function**, a closer-to-the-compiler alternative to templates.
+대부분의 경우 Vue 컴포넌트에서 HTML 은 template 에 작성할 것을 권장한다. 하지만 경우에 따라 HTML 렌더링을 자바스크립트로 해야 할 필요가 있는 경우도 생긴다. 이때가가 바로 **render  함수**가 필요한 때이다. 
 
-Let's dive into a simple example where a `render` function would be practical. Say you want to generate anchored headings:
+구체적으로 `render` 함수를 쓰는게 더 실용적인 경우를 살펴보자. 예를 들어 링크가 걸린 타이틀(h1 ~ h6의 해딩태그)이 있다고 해보자.
 
 ``` html
 <h1>
@@ -18,13 +18,13 @@ Let's dive into a simple example where a `render` function would be practical. S
 </h1>
 ```
 
-For the HTML above, you decide you want this component interface:
+위와 같은 HTML을 만들기 위해 아래와 같이 사용하도록 컴포넌트 인터페이스를 설계했다고 하면 : 
 
 ``` html
 <anchored-heading :level="1">Hello world!</anchored-heading>
 ```
 
-When you get started with a component that just generates a heading based on the `level` prop, you quickly arrive at this:
+`level` 이라는 속성에 따라 해딩태그의 수준을 결정해서 태그를 만들어야 하기 때문에 아래와 같은 구조를 떠올릴 것이다 : 
 
 ``` html
 <script type="text/x-template" id="anchored-heading-template">
@@ -63,9 +63,9 @@ Vue.component('anchored-heading', {
 })
 ```
 
-That template doesn't feel great. It's not only verbose, but we're duplicating `<slot></slot>` for every heading level and will have to do the same when we add the anchor element. The whole thing is also wrapped in a useless `div` because components must contain exactly one root node.
+그런데 이 템플릿은 그다지 좋아보이지 않는다. 'v-if'를 장황하게 늘여서 써야하는 것도 그렇고 똑같은 `<slot></slot>` 태그를 반복해서 써주는 것도 중복코드라고 봐야 한다. 게다가 컴포넌트의 최상위 엘리먼트는 두개 이상일 수 없기 때문에 불필요하게 `div` 태그로 감싸줘야 한다. 
 
-While templates work great for most components, it's clear that this isn't one of them. So let's try rewriting it with a `render` function:
+템플릿을 쓰는것 자체는 훌륭한 방법이지만, 이 경우는 그렇게 훌륭한 경우가 아닌것이 분명하다. 그래서 대안으로 `render` 함수를 써서 다시 구현해 보았다. 
 
 ``` js
 Vue.component('anchored-heading', {
@@ -84,29 +84,29 @@ Vue.component('anchored-heading', {
 })
 ```
 
-Much simpler! Sort of. The code is shorter, but also requires greater familiarity with Vue instance properties. In this case, you have to know that when you pass children without a `slot` attribute into a component, like the `Hello world!` inside of `anchored-heading`, those children are stored on the component instance at `$slots.default`. If you haven't already, **it's recommended to read through the [instance properties API](/api/#vm-slots) before diving into render functions.**
+훨씬 간단해 졌다. 코드도 짧아졌고 훨신 더 Vue 스럽게 만들어 졌다. 이 경우 `slot` 어트리뷰트가 없는 태그나 컨텐츠를 컴포넌트 안에 넣었다면, 예를 들어 위의 경우에는 `anchored-heading` 태그 안에 `Hello world!` 라는 텍스트만 넣었는데, 이 경우 이 텍스트가 `$slots.default` 에 저장이 되고, heading 태그 안에 들어가게 된다. 아직 이 내용을 잘 모른다면 ** render 함수에 대해 더 자세히 들어가기 전에 [instance properties API](/api/#vm-slots) 부분을 확인해 보기 바란다**
 
-## `createElement` Arguments
+## `createElement` 인자
 
-The second thing you'll have to become familiar with is how to use template features in the `createElement` function. Here are the arguments that `createElement` accepts:
+두번째로 렌더링에서 알아야 할 중요한 기능중에 하나가 `createElement` 라는 함수가 템플릿에서 어떻게 쓰이는지 알아야 하는 것이다. `createElement` 함수는 다음과 같은 인자를 받는다 : 
 
 ``` js
 // @returns {VNode}
 createElement(
   // {String | Object | Function}
-  // An HTML tag name, component options, or function
-  // returning one of these. Required.
+  // HTML 태그 이름, component options, or function
+  // returning one of these. 반드시 와야 함.
   'div',
 
   // {Object}
-  // A data object corresponding to the attributes
-  // you would use in a template. Optional.
+  // 어트리뷰트 키-밸류 값을 갖는 객체
+  // you would use in a template. 옵션 사항임.
   {
     // (see details in the next section below)
   },
 
   // {String | Array}
-  // Children VNodes. Optional.
+  // 자식이 될 VNode들. 옵션사항임.
   [
     createElement('h1', 'hello world'),
     createElement(MyComponent, {
@@ -119,9 +119,9 @@ createElement(
 )
 ```
 
-### The Data Object In-Depth
+### Data 객체에 대한 팁 
 
-One thing to note: similar to how `v-bind:class` and `v-bind:style` have special treatment in templates, they have their own top-level fields in VNode data objects.
+어트리뷰트 바인딩을 설명할때 `v-bind:class` 나 `v-bind:style`의 경우 많이 쓰는 attribute이기 때문에 특별히 더 많은 장치를 제공했던 것처럼, root가 되는 Vue 객체의 data 필드도 그들만의 특별한 기능을 하는 특별 필드를 지원한다.
 
 ``` js
 {
@@ -182,9 +182,9 @@ One thing to note: similar to how `v-bind:class` and `v-bind:style` have special
 }
 ```
 
-### Complete Example
+### 재구성한 전체 예제 코드
 
-With this knowledge, we can now finish the component we started:
+이제까지의 내용을 바탕으로 위의 컴포넌트를 아래와 같이 작성해 볼 수 있다 : 
 
 ``` js
 var getChildrenTextContent = function (children) {
@@ -224,11 +224,11 @@ Vue.component('anchored-heading', {
 })
 ```
 
-### Constraints
+### 제약사항 
 
-#### VNodes Must Be Unique
+#### VNode(Virtual DOM에 만들어지는 노드)들은 중복되면 안된다(Unique)
 
-All VNodes in the component tree must be unique. That means the following render function is invalid:
+컴포넌트 트리의 가상 DOM에 만들어지는 VNode 는 반드시 유일해야 한다. 다시말해 다음과 같은 render 함수는 유효하지 않다 : (VNode를 중복사용하고 있기 때문에 마지막 노드만 남을 것이다.)
 
 ``` js
 render: function (createElement) {
@@ -240,7 +240,7 @@ render: function (createElement) {
 }
 ```
 
-If you really want to duplicate the same element/component many times, you can do so with a factory function. For example, the following render function is a perfectly valid way of rendering 20 identical paragraphs:
+만약 같은 컴포넌트를 중복해서 여러개 만들어서 사용하고 싶다면, factory 함수를 사용하면 된다. 예를 들어 아래 예제와 같이 쓰면 20개의 동일한 문단(paragraph)을 무사히(valid) 뿌려낼 수 있다 : 
 
 ``` js
 render: function (createElement) {
@@ -252,9 +252,9 @@ render: function (createElement) {
 }
 ```
 
-## Replacing Template Features with Plain JavaScript
+## 템플릿으로 작성하지 말고 자바스크립트로 해 보기
 
-Wherever something can be easily accomplished in plain JavaScript, Vue render functions do not provide a proprietary alternative. For example, in a template using `v-if` and `v-for`:
+자바스크립트 만으로 간단하게 작업할 수 있다면 template 대신 render 함수를 써보는 것도 좋은 대안이 될 수 있다. 예를 들어, `v-if`와 `v-for`를 사용한 템플릿이 아래와 같다면 :
 
 ``` html
 <ul v-if="items.length">
@@ -263,7 +263,7 @@ Wherever something can be easily accomplished in plain JavaScript, Vue render fu
 <p v-else>No items found.</p>
 ```
 
-This could be rewritten with JavaScript's `if`/`else` and `map` in a render function:
+render 함수에 자바스크립트의 `if`/`else` 와 `map` 함수를 사용해서 구현할 수 있다. 
 
 ``` js
 render: function (createElement) {
@@ -279,7 +279,7 @@ render: function (createElement) {
 
 ## JSX
 
-If you're writing a lot of `render` functions, it might feel painful to write something like this:
+그렇다고 이것저것 다 `render` 함수로 작성하려면 매우 고통스러운 개발이 될 것이다 :
 
 ``` js
 createElement(
@@ -294,7 +294,7 @@ createElement(
 )
 ```
 
-Especially when the template version is so simple in comparison:
+특히나 html 구조가 별거 없다면 template 을 사용하는 편이 훨씬 간단하다.
 
 ``` html
 <anchored-heading :level="1">
@@ -302,7 +302,7 @@ Especially when the template version is so simple in comparison:
 </anchored-heading>
 ```
 
-That's why there's a [Babel plugin](https://github.com/vuejs/babel-plugin-transform-vue-jsx) to use JSX with Vue, getting us back to a syntax that's closer to templates:
+그래서 [Babel plugin](https://github.com/vuejs/babel-plugin-transform-vue-jsx) 로더를 두어 Vue 가 JSX를 사용하도록 하면 되는데, 템플릿을 사용할때와 거의 흡사하다 : 
 
 ``` js
 import AnchoredHeading from './AnchoredHeading.vue'
@@ -319,9 +319,9 @@ new Vue({
 })
 ```
 
-<p class="tip">Aliasing `createElement` to `h` is a common convention you'll see in the Vue ecosystem and is actually required for JSX. If `h` is not available in the scope, your app will throw an error.</p>
+<p class="tip"> `createElement` 변수를 `h` 로 명명하는 것은 Vue 개발에서 자주 보게 될 관습화된 변수이다. JSX를 사용한다면 이 변수는 반드시 필수이다. 만약 변수명도 `h`로 해주어야 하는데, 만약 없으면 app이 에러를 던질 것이다.</p>
 
-For more on how JSX maps to JavaScript, see the [usage docs](https://github.com/vuejs/babel-plugin-transform-vue-jsx#usage).
+JSX 가 어떻게 자바스크립트에 어떻게 매핑되는지 알고 싶다면 [usage docs](https://github.com/vuejs/babel-plugin-transform-vue-jsx#usage) 를 참고하기 바란다
 
 ## Functional Components
 
@@ -396,9 +396,9 @@ Vue.component('smart-list', {
 })
 ```
 
-### `slots()` vs `children`
+### `slots()` 대 `children`
 
-You may wonder why we need both `slots()` and `children`. Wouldn't `slots().default` be the same as `children`? In some cases, yes - but what if you have a functional component with the following children?
+`slots()` 이 `children` 둘다 필요한 이유가 뭔지 궁금할지도 모르겠다. `slots().default`가 결과적으로 `children` 과 항상 같은것이 아닌가? 물론 그런 경우도 있지만, 아래와 같은 자식 노드들을 갖는 functional 컴포넌트가 있다면 어떨까?
 
 ``` html
 <my-functional-component>
@@ -410,6 +410,7 @@ You may wonder why we need both `slots()` and `children`. Wouldn't `slots().defa
 ```
 
 For this component, `children` will give you both paragraphs, `slots().default` will give you only the second, and `slots().foo` will give you only the first. Having both `children` and `slots()` therefore allows you to choose whether this component knows about a slot system or perhaps delegates that responsibility to another component by simply passing along `children`.
+이경우, `children` 두개의 p 엘리먼트를 리턴하지만 `slots().default`는 두번째 p 태그만, 그리고 `slots().foo` 가 첫번째 p 태그를 리턴할 것이다.  `children` 과 `slots()`을 통해 우리는 이 컴포넌트가 slot 을 사용하는지 그렇지 않은지를 알 수 있다.(???)
 
 ## Template Compilation
 

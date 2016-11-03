@@ -4,14 +4,14 @@ type: guide
 order: 17
 ---
 
-## Basics
+## 기본적인 내용 
 
-Mixins are a flexible way to distribute reusable functionalities for Vue components. A mixin object can contain any component options. When a component uses a mixin, all options in the mixin will be "mixed" into the component's own options.
+믹스인은 뷰 컴포넌트들이 재사용 가능한 기능들을 여러 뷰에서 사용할 수 있도록 하기 위한 장치이다. 믹스인 객체는 컴포넌트 생성자 옵션에서 갖는 모든 필드를 갖을 수 있다. 컴포넌트가 믹스인을 사용하면 믹스인에 있는 모든 옵션들이 컴포넌트의 옵션과 서로 섞이게(믹스) 된다.
 
 Example:
 
 ``` js
-// define a mixin object
+// 믹스인 객체를 정의하고 
 var myMixin = {
   created: function () {
     this.hello()
@@ -23,7 +23,7 @@ var myMixin = {
   }
 }
 
-// define a component that uses this mixin
+// 이 믹스인을 사용하는 컴포넌트를 정의한다 
 var Component = Vue.extend({
   mixins: [myMixin]
 })
@@ -31,7 +31,7 @@ var Component = Vue.extend({
 var component = new Component() // -> "hello from mixin!"
 ```
 
-## Option Merging
+## 옵션 머지(합치기) 
 
 When a mixin and the component itself contain overlapping options, they will be "merged" using appropriate strategies. For example, hook functions with the same name are merged into an array so that all of them will be called. In addition, mixin hooks will be called **before** the component's own hooks:
 
@@ -86,7 +86,7 @@ vm.conflicting() // -> "from self"
 
 Note that the same merge strategies are used in `Vue.extend()`.
 
-## Global Mixin
+## 전역 믹스인 (Global Mixin)
 
 You can also apply a mixin globally. Use caution! Once you apply a mixin globally, it will affect **every** Vue instance created afterwards. When used properly, this can be used to inject processing logic for custom options:
 
